@@ -449,6 +449,11 @@ class Window(pyglet.window.Window):
         # otherwise. The second element is -1 when moving left, 1 when moving
         # right, and 0 otherwise.
         self.strafe = [0, 0]
+        #0,0 standing still
+        #0,1 moving right
+        #0,-1 moving left
+        #1,1 backward and right
+        #1,0 backward
 
         # Current (x, y, z) position in the world, specified with floats. Note
         # that, perhaps unlike in math class, the y-axis is the vertical axis.
@@ -516,7 +521,10 @@ class Window(pyglet.window.Window):
         # looking straight up.
         dy = math.sin(math.radians(y))
         dx = math.cos(math.radians(x - 90)) * m
-        dz = math.sin(math.radians(x - 90)) * m
+        #when looking up or down x = 0, so cos -90 and 90 is 0, * m, m is 0. so dx is 0.
+        dz = math.sin(math.radians(x - 90)) * m 
+        #sin will be 1 to -1 when up and down, 
+
         return (dx, dy, dz)
 
     def get_motion_vector(self):
@@ -839,9 +847,8 @@ class Window(pyglet.window.Window):
 
         """
         x, y, z = self.position
-        self.label.text = '%02d (%.2f, %.2f, %.2f) %d / %d' % (
-            pyglet.clock.get_fps(), x, y, z,
-            len(self.model._shown), len(self.model.world))
+        self.label.text = '(%.2f, %.2f, %.2f) %d / %d, %d, %d' % ( x, y, z,
+            len(self.model._shown), len(self.model.world), self.strafe[0], self.strafe[1])
         self.label.draw()
 
     def draw_reticle(self):
@@ -891,7 +898,7 @@ def setup():
 
 
 def main():
-    window = Window(width=800, height=600, caption='Pyglet', resizable=True)
+    window = Window(width=1600, height=1200, caption='Pyglet', resizable=True)
     # Hide the mouse cursor and prevent the mouse from leaving the window.
     window.set_exclusive_mouse(True)
     setup()

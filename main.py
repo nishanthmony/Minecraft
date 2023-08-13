@@ -19,8 +19,8 @@ SECTOR_SIZE = 16
 WALKING_SPEED = 5
 FLYING_SPEED = 15
 
-GRAVITY = 20.0
-MAX_JUMP_HEIGHT = 1.0 # About the height of a block.
+GRAVITY = 2.0
+MAX_JUMP_HEIGHT = 10.0 # About the height of a block.
 # To derive the formula for calculating jump speed, first solve
 #    v_t = v_0 + a * t
 # for the time at which you achieve maximum height, where a is the acceleration
@@ -523,7 +523,7 @@ class Window(pyglet.window.Window):
         dx = math.cos(math.radians(x - 90)) * m
         #when looking up or down x = 0, so cos -90 and 90 is 0, * m, m is 0. so dx is 0.
         dz = math.sin(math.radians(x - 90)) * m 
-        #sin will be 1 to -1 when up and down, 
+        #sin will be 1 to -1 when up and down,  
 
         return (dx, dy, dz)
 
